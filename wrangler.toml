@@ -1,4 +1,4 @@
-name = "script-name-dev"
+name = "cf-workers-dashboard-dev"
 type = "webpack"
 webpack_config = "./packages/worker/webpack.config.js"
 account_id = "5a883b414d4090a1442b20361f3c43a9"
@@ -11,4 +11,4 @@ bucket = "./packages/client/build"
 entry-point = "./packages/worker"
 
 [env.production]
-name = "script-name"
+name = "cf-workers-dashboard"

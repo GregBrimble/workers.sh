@@ -1,5 +1,5 @@
 {
-  "name": "script-name",
+  "name": "cf-workers-dashboard",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:GregBrimble/repositoryname.git"
+    "url": "git@github.com:GregBrimble/cf-workers-dashboard.git"
   },
   "author": {
     "name": "Greg Brimble",
@@ -31,9 +31,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/GregBrimble/repositoryname/issues"
+    "url": "https://github.com/GregBrimble/cf-workers-dashboard/issues"
   },
-  "homepage": "https://github.com/GregBrimble/repositoryname#readme",
+  "homepage": "https://cf-workers-dashboard.gregbrimble.workers.dev/",
   "devDependencies": {
     "@cloudflare/wrangler": "^1.8.4",
     "cross-fetch": "^3.0.4",
