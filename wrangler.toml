@@ -4,7 +4,9 @@ webpack_config = "./packages/worker/webpack.config.js"
 account_id = "5a883b414d4090a1442b20361f3c43a9"
 workers_dev = true
 
-kv-namespaces = []
+kv-namespaces = [
+  { binding = "TAIL_LOGS", id = "fa16caae6e2947e288e48d847233cb6b" }
+]
 
 [site]
 bucket = "./packages/client/build"

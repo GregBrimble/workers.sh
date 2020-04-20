@@ -1,8 +1,8 @@
-import { handleHello } from "./hello";
+import { api } from ".";
 
-describe("hello", () => {
+describe("api", () => {
   it("returns a response", async () => {
-    const response = await handleHello(undefined);
+    const response = await api(undefined);
     const text = await response.text();
     expect(text).toEqual("Hello, world!");
   });

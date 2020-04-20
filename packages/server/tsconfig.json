@@ -9,6 +9,7 @@
     "./src/**/*.ts",
     "./node_modules/@cloudflare/workers-types/index.d.ts"
   ],
+  "types": ["./src/index.d.ts"],
   "typeAcquisition": {
     "include": ["jest"]
   },

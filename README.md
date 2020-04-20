@@ -1,4 +1,4 @@
-# Cloudflare Workers Typescript Server & Client Template
+# Cloudflare Workers Dashboard
 
 [![GitHub Actions Test](https://github.com/GregBrimble/cf-workers-dashboard/workflows/Test/badge.svg)](https://github.com/GregBrimble/cf-workers-dashboard/actions?query=workflow%3ATest)
 [![GitHub Actions Deploy](https://github.com/GregBrimble/cf-workers-dashboard/workflows/Deploy/badge.svg)](https://github.com/GregBrimble/cf-workers-dashboard/actions?query=workflow%3ADeploy)

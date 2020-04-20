@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "prebuild": "lerna run --scope client build",
+    "prebuild": "lerna run --parallel clean && lerna run --scope client build",
     "build": "wrangler build",
     "clean:node": "rimraf node_modules package-lock.json",
     "test:client": "CI=true lerna run --scope client test",
@@ -17,7 +17,7 @@
     "start:worker": "wrangler dev",
     "start:tunnel": "cloudflared tunnel --url localhost:3000 --metrics localhost:8081",
     "predeploy": "npm run prebuild",
-    "deploy": "wrangler publish",
+    "deploy": "wrangler publish --env production",
     "updatePackages": "node updatePackages.js && npm i"
   },
   "repository": {
@@ -35,14 +35,14 @@
   },
   "homepage": "https://cf-workers-dashboard.gregbrimble.workers.dev/",
   "devDependencies": {
-    "@cloudflare/wrangler": "^1.8.4",
-    "cross-fetch": "^3.0.4",
-    "husky": "^4.2.5",
+    "@cloudflare/wrangler": "1.8.4",
+    "cross-fetch": "3.0.4",
+    "husky": "4.2.5",
     "lerna": "3.20.2",
-    "npm-check-updates": "^4.1.2",
-    "prettier": "^2.0.4",
+    "npm-check-updates": "4.1.2",
+    "prettier": "2.0.4",
     "rimraf": "3.0.2",
-    "ts-loader": "^7.0.0",
+    "ts-loader": "7.0.1",
     "typescript": "3.8.3"
   },
   "husky": {

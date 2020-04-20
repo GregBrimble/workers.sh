@@ -1,12 +1,12 @@
 import {} from "@cloudflare/workers-types";
 import { Router } from "./lib/router";
-import { handleHello } from "./hello";
+import { api as graphql } from "./graphql";
+import { handleRequest as tailLogHandler } from "./tailLog";
 
 const router = new Router();
+router.get("/graphql", graphql);
+router.post("/graphql", graphql);
+router.post("/tailLog/.*", tailLogHandler);
 
-router.get("/hello", (request) => handleHello(request));
-
-export const handleRequest = async (request: Request): Promise<Response> => {
-  console.log("Hello from a worker!");
-  return router.route(request);
-};
+export const handleRequest = async (request: Request): Promise<Response> =>
+  router.route(request);
