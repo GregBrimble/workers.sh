@@ -13,7 +13,8 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-scripts": "3.4.1",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "snyk": "^1.316.1"
   },
   "scripts": {
     "build:style": "postcss src/index.css -o src/index.generated.css",
@@ -26,7 +27,9 @@
     "test:ci": "npm run test -- --coverage",
     "eject": "react-scripts eject",
     "lint": "prettier -c .",
-    "lint:fix": "npm run lint -- --write"
+    "lint:fix": "npm run lint -- --write",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,5 +54,6 @@
     "postcss-cli": "^7.1.0",
     "prettier": "^2.0.4",
     "tailwindcss": "^1.2.0"
-  }
+  },
+  "snyk": true
 }
