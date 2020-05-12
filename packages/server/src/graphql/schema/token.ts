@@ -34,7 +34,10 @@ const mapToken = (
 export const resolvers = {
   Query: {
     token: async (obj, args, context: Context): Promise<Token> => {
-      return mapToken(await context.cloudflare("user/tokens/verify"), context);
+      return mapToken(
+        await context.cloudflareREST("user/tokens/verify"),
+        context
+      );
     },
   },
 };

@@ -4,6 +4,8 @@ import { useWindowKey } from "../hooks/useWindowKey";
 import { classNames } from "../utils/classNames";
 import { useMouseOutside } from "../hooks/useMouseOutside";
 import { Workers } from "./Workers";
+import { Accounts } from "./Accounts";
+import { Home } from "./Home";
 import { Worker } from "./Worker";
 import {
   Switch,
@@ -11,14 +13,15 @@ import {
   Route,
   useLocation,
   useRouteMatch,
+  Redirect,
 } from "react-router-dom";
 import moment from "moment";
 import { useQuery, gql } from "@apollo/client";
 import { LazyRender } from "../components/LazyRender";
 import { ProfilePicture } from "../components/ProfilePicture";
 import { Settings } from "../components/Settings";
-import { MainHeading } from "../components/MainHeading";
-import { WorkersHeading } from "../components/WorkersHeading";
+import { Heading } from "../components/headings";
+import { Footer } from "../components/Footer";
 
 const CONTAINER_QUERY = gql`
   {
@@ -32,14 +35,7 @@ const CONTAINER_QUERY = gql`
 export const Container = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
-  const menuItems = [
-    { path: "/workers", label: "Workers" },
-    { path: "/elsewhere", label: "Elsewhere" },
-  ];
   const location = useLocation();
-  const onWorkersPage = useRouteMatch({
-    path: "/workers/*",
-  });
 
   const { loading, error, data } = useQuery(CONTAINER_QUERY);
 
@@ -72,33 +68,6 @@ export const Container = () => {
                           />
                         </div>
                       </Link>
-                      <div className="hidden md:block">
-                        <div className="ml-10 flex items-baseline">
-                          {menuItems.map(({ path, label }) => {
-                            const ref = createRef<any>();
-
-                            return (
-                              <Link
-                                key={path}
-                                innerRef={ref}
-                                to={() => {
-                                  if (ref.current) ref.current.blur();
-                                  return path;
-                                }}
-                                className={classNames(
-                                  "ml-4 first:ml-0 px-3 py-2 rounded-md text-sm font-medium",
-                                  location.pathname.startsWith(path)
-                                    ? "text-white bg-gray-900"
-                                    : "text-gray-300 hover:text-white hover:bg-gray-700",
-                                  "focus:outline-none focus:text-white focus:bg-gray-700 transition ease-in-out duration-150"
-                                )}
-                              >
-                                {label}
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      </div>
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-4 flex items-center md:ml-6">
@@ -157,6 +126,14 @@ export const Container = () => {
                                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                 >
                                   Settings
+                                </a>
+                                <a
+                                  href="https://github.com/GregBrimble/workers.sh/issues"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                >
+                                  Report a Bug
                                 </a>
                               </div>
                             </div>
@@ -218,24 +195,8 @@ export const Container = () => {
                   mobileMenuOpen ? "block" : "hidden"
                 )}
               >
-                <div className="px-2 py-3 sm:px-3">
-                  {menuItems.map(({ path, label }) => (
-                    <Link
-                      key={path}
-                      to={path}
-                      className={classNames(
-                        "mt-1 first:mt-0 block px-3 py-2 rounded-md text-base font-medium",
-                        location.pathname.startsWith(path)
-                          ? "text-white bg-gray-900"
-                          : "text-gray-300 hover:text-white hover:bg-gray-700",
-                        "focus:outline-none focus:text-white focus:bg-gray-700"
-                      )}
-                    >
-                      {label}
-                    </Link>
-                  ))}
-                </div>
-                <div className="pt-4 pb-3 border-t border-gray-700">
+                <div className="pt-4 pb-3">
+                  {/* border-t border-gray-700 */}
                   <div className="flex items-center px-5">
                     <div className="flex-shrink-0">
                       <ProfilePicture className="h-10 w-10 rounded-full" />
@@ -270,25 +231,24 @@ export const Container = () => {
                     aria-labelledby="user-menu"
                   >
                     <a
-                      href="/"
-                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                      role="menuitem"
-                    >
-                      Your Profile
-                    </a>
-                    <a
-                      href="/"
-                      className="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                      href="#"
+                      onClick={() => {
+                        settingsRef.current.open();
+                        setProfileDropdownOpen(false);
+                      }}
+                      className="mt-1 first:mt-0 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                       role="menuitem"
                     >
                       Settings
                     </a>
                     <a
-                      href="/"
-                      className="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                      href="https://github.com/GregBrimble/workers.sh/issues"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 first:mt-0 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                       role="menuitem"
                     >
-                      Sign out
+                      Report a Bug
                     </a>
                   </div>
                 </div>
@@ -296,76 +256,38 @@ export const Container = () => {
             </nav>
             <header className="py-10">
               <div className="p-8 bg-gray-800">
-                {onWorkersPage ? (
-                  <WorkersHeading match={onWorkersPage} />
-                ) : (
-                  <MainHeading />
-                )}
+                <Heading />
               </div>
             </header>
           </div>
 
           <main className="-mt-32">
-            <Switch>
-              <Route exact path="/">
-                <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-                  Home
-                </div>
-              </Route>
-              <Route path="/workers/:workerID">
-                <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
+              <Switch>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/accounts/:accountID/workers/:workerID">
                   <Worker />
-                </div>
-              </Route>
-              <Route path="/workers">
-                <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
+                </Route>
+                <Route path="/accounts/:accountID/workers">
                   <Workers />
-                </div>
-              </Route>
-              <Route path="/elsewhere">
-                <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-                  Elsewhere
-                </div>
-              </Route>
-            </Switch>
+                </Route>
+                <Route path="/accounts/:accountID">
+                  <Redirect to={location.pathname + "/workers"} />
+                </Route>
+                <Route path="/accounts">
+                  <Accounts />
+                </Route>
+                <Route path="/:find">
+                  Let's find {location.pathname.substr(1)}
+                </Route>
+              </Switch>
+            </div>
           </main>
         </div>
       </div>
-      <div className="bg-white">
-        <div className="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
-          <div className="flex justify-center md:order-2">
-            <a
-              href="https://github.com/GregBrimble/cf-workers-dashboard"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-6 text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">GitHub</span>
-              <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  fillRule="evenodd"
-                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
-          </div>
-          <div className="mt-8 md:mt-0 md:order-1">
-            <p className="text-center text-base leading-6 text-gray-400">
-              Cloudflare Workers Dashboard by{" "}
-              <a
-                href="https://gregbrimble.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-gray-500"
-              >
-                Greg Brimble
-              </a>
-              .
-            </p>
-          </div>
-        </div>
-      </div>
+      <Footer />
 
       <Settings ref={settingsRef} />
     </>

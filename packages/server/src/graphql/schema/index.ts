@@ -14,12 +14,10 @@ import {
   typeDefs as accountTypeDefs,
   resolvers as accountResolvers,
 } from "./account";
-import {
-  typeDefs as scriptTypeDefs,
-  resolvers as scriptResolvers,
-} from "./script";
+import { typeDefs as scriptTypeDefs } from "./script";
 import { typeDefs as tailTypeDefs, resolvers as tailResolvers } from "./tail";
 import { typeDefs as tailLogTypeDefs } from "./tailLog";
+import { typeDefs as analyticsTypeDefs } from "./analytics";
 
 const typeDefs = gql`
   type Query {
@@ -54,6 +52,7 @@ export const schema = makeExecutableSchema({
     scriptTypeDefs,
     tailTypeDefs,
     tailLogTypeDefs,
+    analyticsTypeDefs,
   ],
   resolvers: [
     resolvers,
@@ -62,7 +61,6 @@ export const schema = makeExecutableSchema({
     userResolvers,
     tokenResolvers,
     accountResolvers,
-    scriptResolvers,
     tailResolvers,
   ],
 });

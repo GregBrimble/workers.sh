@@ -1,3 +1,4 @@
+import { typeDefs as dateTypeDefs, resolvers as dateResolvers } from "./date";
 import {
   typeDefs as dateTimeTypeDefs,
   resolvers as dateTimeResolvers,
@@ -13,12 +14,14 @@ import {
 import { typeDefs as urlTypeDefs, resolvers as urlResolvers } from "./url";
 
 export const typeDefs = [
+  dateTypeDefs,
   dateTimeTypeDefs,
   emailAddressTypeDefs,
   jsonObjectTypeDefs,
   urlTypeDefs,
 ];
 export const resolvers = [
+  dateResolvers,
   dateTimeResolvers,
   emailAddressResolvers,
   jsonObjectResolvers,

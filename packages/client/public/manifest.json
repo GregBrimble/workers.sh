@@ -1,6 +1,6 @@
 {
-  "short_name": "CF Workers Dashboard",
-  "name": "Cloudflare Workers Dashboard",
+  "short_name": "workers.sh",
+  "name": "workers.sh",
   "icons": [
     {
       "src": "favicon.ico",

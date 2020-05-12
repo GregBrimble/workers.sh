@@ -1,25 +1,19 @@
-import { makeCloudflareClient } from "./cloudflare";
-import { Account, getDefaultAccount } from "./schema/account";
+import { makeRESTlient, makeGraphQLClient, GraphQLOptions } from "./cloudflare";
+import { DocumentNode } from "graphql";
 
 export type Context = {
-  cloudflare: (
+  cloudflareREST: (
     path: string,
     init?: RequestInit,
     { complete }?: { complete: boolean }
   ) => Promise<any>;
-  defaultAccount: Promise<Account>;
+  cloudflareGraphQL: (
+    query: DocumentNode,
+    options?: GraphQLOptions
+  ) => Promise<any>;
 };
 
-export const makeContextValue = async (request: Request): Promise<Context> => {
-  let defaultAccount = undefined;
-
-  return {
-    cloudflare: makeCloudflareClient(request.headers.get("Authorization")),
-    get defaultAccount() {
-      if (defaultAccount === undefined)
-        defaultAccount = getDefaultAccount(this);
-      return defaultAccount;
-      // return (defaultAccount = defaultAccount || getDefaultAccount(this));
-    },
-  };
-};
+export const makeContextValue = async (request: Request): Promise<Context> => ({
+  cloudflareREST: makeRESTlient(request),
+  cloudflareGraphQL: makeGraphQLClient(request),
+});

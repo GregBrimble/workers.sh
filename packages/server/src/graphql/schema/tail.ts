@@ -1,13 +1,9 @@
 import gql from "graphql-tag";
 import { Context } from "../context";
-import { TailLog, getLogs } from "../../tailLog";
 import { PUBLIC_URL } from "../../config";
-
-export type Tail = {
-  id: string;
-  url: string;
-  expiresAt: Date;
-};
+import { Tail, TailRepository } from "../../models/Tail";
+import { AccountRepository } from "../../models/Account";
+import { registerWaitUntil } from "wait-until-all";
 
 export type SendTailHeartbeatInput = {
   tailID: string;
@@ -29,14 +25,14 @@ export const typeDefs = gql`
   }
 
   input SendTailHeartbeatInput {
-    tailID: ID!
+    accountID: ID!
     scriptID: ID!
-    accountID: ID
+    tailID: ID!
   }
 
   input CreateTailInput {
+    accountID: ID!
     scriptID: ID!
-    accountID: ID
     url: URL
   }
 
@@ -46,51 +42,52 @@ export const typeDefs = gql`
   }
 `;
 
-export const mapTail = (
-  { id, url, expires_at: expiresAt }: any,
-  context: Context,
-  { accountID, scriptID }: { accountID: string; scriptID: string }
-): Tail => ({
-  id,
-  url,
-  expiresAt: expiresAt && new Date(expiresAt),
-});
-
 export const resolvers = {
   Mutation: {
     sendTailHeartbeat: async (
       obj,
       {
-        input: { tailID, scriptID, accountID },
+        input: { accountID, scriptID, tailID },
       }: { input: SendTailHeartbeatInput },
       context: Context
     ): Promise<Tail> => {
-      if (!accountID) accountID = (await context.defaultAccount).id;
-
-      const response = await context.cloudflare(
+      const tailData = await context.cloudflareREST(
         `accounts/${accountID}/workers/scripts/${scriptID}/tails/${tailID}/heartbeat`,
         {
           method: "POST",
         }
       );
-      return mapTail(response, context, { accountID, scriptID });
+
+      const account = await AccountRepository.load(accountID);
+      const script = await account.script({ id: scriptID });
+      const tail = new Tail(tailData, context, { script });
+      registerWaitUntil(TailRepository.save(tail));
+      return tail;
     },
     createTail: async (
       obj,
       { input: { accountID, scriptID, url } }: { input: CreateTailInput },
       context: Context
     ): Promise<Tail> => {
-      accountID = accountID || (await context.defaultAccount).id;
       url = url || `${PUBLIC_URL}tailLog/${accountID}/${scriptID}`;
 
-      const response = await context.cloudflare(
+      const tailData = await context.cloudflareREST(
         `accounts/${accountID}/workers/scripts/${scriptID}/tails`,
         {
           method: "POST",
           body: JSON.stringify({ url }),
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
-      return mapTail(response, context, { accountID, scriptID });
+
+      const account = await AccountRepository.load(accountID);
+      console.log("Got Account", account);
+      const script = await account.script({ id: scriptID });
+      const tail = new Tail(tailData, context, { script });
+      registerWaitUntil(TailRepository.save(tail));
+      return tail;
     },
   },
 };

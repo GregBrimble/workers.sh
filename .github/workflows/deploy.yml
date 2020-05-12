@@ -17,6 +17,8 @@ jobs:
           fetch-depth: 1
       - name: Install
         run: npm ci
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Deploy
         run: npm run deploy
         env:

@@ -35,14 +35,14 @@
   },
   "homepage": "https://cf-workers-dashboard.gregbrimble.workers.dev/",
   "devDependencies": {
-    "@cloudflare/wrangler": "1.8.4",
+    "@cloudflare/wrangler": "1.9.0",
     "cross-fetch": "3.0.4",
     "husky": "4.2.5",
     "lerna": "3.20.2",
     "npm-check-updates": "4.1.2",
-    "prettier": "2.0.4",
+    "prettier": "2.0.5",
     "rimraf": "3.0.2",
-    "ts-loader": "7.0.1",
+    "ts-loader": "7.0.2",
     "typescript": "3.8.3"
   },
   "husky": {
@@ -50,5 +50,6 @@
       "pre-commit": "npm run lint || (npm run lint:fix && npm run lint)",
       "pre-push": "npm test"
     }
-  }
+  },
+  "dependencies": {}
 }

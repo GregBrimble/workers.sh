@@ -5,15 +5,17 @@ import {
   concat,
   InMemoryCache,
 } from "@apollo/client";
-import { useSettings, getSettings } from "./contexts/SettingsContext";
+import { getSettings } from "./contexts/SettingsContext";
 
 const httpLink = new HttpLink({ uri: "/graphql" });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-  const { token } = getSettings();
+  const { token, emailAddress, key } = getSettings();
   operation.setContext({
     headers: {
       Authorization: token ? `Bearer ${token}` : "",
+      "X-AUTH-EMAIL": emailAddress,
+      "X-AUTH-KEY": key,
     },
   });
 

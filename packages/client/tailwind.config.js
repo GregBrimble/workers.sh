@@ -12,4 +12,11 @@ module.exports = {
       },
     },
   },
+  purge: [
+    "./src/**/*.css",
+    "./src/**/*.tsx",
+    "./src/**/*.ts",
+    "./src/**/*.jsx",
+    "./src/**/*.js",
+  ],
 };

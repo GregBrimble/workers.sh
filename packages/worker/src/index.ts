@@ -3,7 +3,7 @@ import {
   getAssetFromKV,
   serveSinglePageApp,
 } from "@cloudflare/kv-asset-handler";
-import { handleRequest as server } from "../../server/src";
+import { handleRequest as server, executeWaitUntil } from "../../server/src";
 import { handleError } from "./handleError";
 import { internalServerError, notFound } from "./pages";
 
@@ -32,6 +32,7 @@ const handleRequest = async (event: any): Promise<Response> => {
   try {
     const { request } = event;
     const response = await server(request);
+    executeWaitUntil(event);
     if (response.status !== 404) return response;
 
     return handleAssetRequest(event);

@@ -2,14 +2,13 @@ import React, { FC } from "react";
 import moment from "moment";
 import { gql, useQuery } from "@apollo/client";
 import { LazyRender } from "../components/LazyRender";
-import { Link } from "react-router-dom";
+import { Link, useParams, useRouteMatch } from "react-router-dom";
 
 const WORKERS_QUERY = gql`
-  {
-    account {
+  query($accountID: ID!) {
+    account(id: $accountID) {
       scripts {
         id
-        createdOn
         modifiedOn
       }
     }
@@ -17,9 +16,11 @@ const WORKERS_QUERY = gql`
 `;
 
 export const Workers: FC<{}> = ({}) => {
-  const { loading, error, data } = useQuery(WORKERS_QUERY);
-
-  console.log("RE");
+  const { url } = useRouteMatch();
+  const { accountID } = useParams();
+  const { loading, error, data } = useQuery(WORKERS_QUERY, {
+    variables: { accountID },
+  });
 
   return (
     <div className="max-w-none mx-auto">
@@ -67,7 +68,7 @@ export const Workers: FC<{}> = ({}) => {
                     key={script.id}
                   >
                     <Link
-                      to={`/workers/${script.id}`}
+                      to={`${url}/${script.id}`}
                       className="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
                     >
                       <div className="px-4 py-4 flex items-center sm:px-6">

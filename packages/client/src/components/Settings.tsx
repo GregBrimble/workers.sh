@@ -11,12 +11,26 @@ import { Transition } from "./lib/Transition";
 import { useSettings } from "../contexts/SettingsContext";
 import { client } from "../client";
 import { useFocus } from "../hooks/useFocus";
+import { useRouteMatch } from "react-router-dom";
 
 export const Settings = forwardRef((props, ref) => {
-  const { token: defaultTokenValue, setToken: saveToken } = useSettings();
-  const [open, setOpen] = useState(!defaultTokenValue);
-  const [token, setToken] = useState(defaultTokenValue);
+  const homeMatch = useRouteMatch({
+    path: "/",
+    exact: true,
+  }) as Record<string, any>;
+  const {
+    authentication: defaultAuthentication,
+    setAuthentication: saveAuthentication,
+    hasToken,
+    hasKey,
+  } = useSettings();
+  const [open, setOpen] = useState(!homeMatch && !(hasKey && hasToken));
+  const [authentication, setAuthentication] = useState(defaultAuthentication);
   const [tokenInputRef, setTokenInputFocus] = useFocus();
+
+  const [token, setToken] = useState(authentication.token);
+  const [emailAddress, setEmailAddress] = useState(authentication.emailAddress);
+  const [key, setKey] = useState(authentication.key);
 
   useImperativeHandle(ref, () => ({
     open: () => {
@@ -27,6 +41,8 @@ export const Settings = forwardRef((props, ref) => {
   useEffect(() => {
     if (open) setTokenInputFocus();
   }, [open]);
+
+  // TODO: Validate authentication on save
 
   return (
     <div
@@ -64,14 +80,13 @@ export const Settings = forwardRef((props, ref) => {
               <div className="max-w-3xl mx-auto">
                 <div>
                   <div>
-                    <div>
-                      <h3 className="text-lg leading-6 font-medium text-gray-900">
-                        Settings
-                      </h3>
-                    </div>
-                    <div className="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
-                      <div className="sm:col-span-6">
-                        {/* TODO: Validate token on change/submit */}
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">
+                      Settings
+                    </h3>
+                  </div>
+                  <div className="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
+                    <div className="sm:col-span-6">
+                      <div>
                         <label
                           htmlFor="api_token"
                           className="block text-sm font-medium leading-5 text-gray-700"
@@ -125,67 +140,150 @@ export const Settings = forwardRef((props, ref) => {
 
                           <details>
                             <summary className="mt-4 cursor-pointer">
-                              More information
+                              Permissions
                             </summary>
                             <div className="ml-4">
-                              <h4 className="font-bold mb-1 mt-2">
-                                Permissions
-                              </h4>
-                              <div>
-                                The following permissions are required:
-                                <dl className="list-disc list-inside mt-2">
-                                  <dt className="font-medium mt-2 first:mt-0">
-                                    Account → Workers KV Storage → Edit
-                                  </dt>
-                                  <dd>TODO</dd>
-                                  <dt className="font-medium mt-2 first:mt-0">
-                                    Account → Workers Scripts → Edit
-                                  </dt>
-                                  <dd>TODO</dd>
-                                  <dt className="font-medium mt-2 first:mt-0">
-                                    Account → Workers Routes → Edit
-                                  </dt>
-                                  <dd>TODO</dd>
-                                  <dt className="font-medium mt-2 first:mt-0">
-                                    Account → Account Settings → Read
-                                  </dt>
-                                  <dd>
-                                    Required to read workers.dev subdomain
-                                  </dd>
-                                  <dt className="font-medium mt-2 first:mt-0">
-                                    Account → User Details → Read
-                                  </dt>
-                                  <dd>
-                                    Required to fetch basic user information
-                                  </dd>
-                                </dl>
-                              </div>
-
-                              <h4 className="font-bold mb-1 mt-4">Security</h4>
-                              <p>
-                                This token is stored on your device, and is sent
-                                as an Authorization HTTP header only to
-                                communicate with the Cloudflare API.{" "}
-                                <span className="font-bold">
-                                  Your API token is not stored anywhere other
-                                  than on your device
-                                </span>
-                                . Because of this, you will also have to provide
-                                a token on any other device you wish to use this
-                                dashboard from. This application is{" "}
-                                <a
-                                  href="https://github.com/GregBrimble/cf-workers-dashboard"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-indigo-500 hover:underline"
-                                >
-                                  open-source
-                                </a>
-                                .
-                              </p>
+                              The following permissions are required:
+                              <dl className="list-disc list-inside mt-2">
+                                <dt className="font-medium mt-2 first:mt-0">
+                                  Account → Workers KV Storage → Edit
+                                </dt>
+                                <dd>Required to interact with Workers KV</dd>
+                                <dt className="font-medium mt-2 first:mt-0">
+                                  Account → Workers Scripts → Edit
+                                </dt>
+                                <dd>Required to deploy Workers scripts</dd>
+                                <dt className="font-medium mt-2 first:mt-0">
+                                  Account → Workers Routes → Edit
+                                </dt>
+                                <dd>
+                                  Required to deploy Workers scripts to a given
+                                  route
+                                </dd>
+                                <dt className="font-medium mt-2 first:mt-0">
+                                  Account → Account Settings → Read
+                                </dt>
+                                <dd>Required to read workers.dev subdomain</dd>
+                                <dt className="font-medium mt-2 first:mt-0">
+                                  Account → User Details → Read
+                                </dt>
+                                <dd>
+                                  Required to fetch basic user information
+                                </dd>
+                              </dl>
                             </div>
                           </details>
                         </div>
+                      </div>
+                      <div className="mt-8 border-t border-gray-200 pt-8">
+                        <label
+                          htmlFor="api_token"
+                          className="block text-sm font-medium leading-5 text-gray-700"
+                        >
+                          Cloudflare Account Email Address
+                        </label>
+                        <div className="mt-1 rounded-md shadow-sm">
+                          <input
+                            id="email_address"
+                            type="email"
+                            className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 font-mono"
+                            value={emailAddress}
+                            onChange={(event) =>
+                              setEmailAddress(event.target.value)
+                            }
+                          />
+                        </div>
+                        <label
+                          htmlFor="api_token"
+                          className="mt-2 block text-sm font-medium leading-5 text-gray-700"
+                        >
+                          Cloudflare Global API Key
+                        </label>
+                        <div className="mt-1 rounded-md shadow-sm">
+                          <input
+                            id="key"
+                            type="text"
+                            className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 font-mono"
+                            value={key}
+                            onChange={(event) => setKey(event.target.value)}
+                          />
+                        </div>
+                        <div className="mt-2 text-sm text-gray-500">
+                          <ol className="list-decimal list-inside">
+                            <li className="mt-1">
+                              Navigate to the{" "}
+                              <a
+                                href="https://dash.cloudflare.com/profile/api-tokens"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-indigo-500 hover:underline"
+                              >
+                                API Tokens tab
+                              </a>{" "}
+                              on Profile page of the official Cloudflare
+                              dashboard.
+                            </li>
+                            <li className="mt-1">
+                              Next to{" "}
+                              <span className="font-bold">Global API Key</span>,
+                              click <span className="font-bold">View</span>.
+                              Confirm your password, copy the key, and paste in
+                              the box above.
+                            </li>
+                          </ol>
+                        </div>
+                      </div>
+                      <div className="mt-8 border-t border-gray-200 pt-8">
+                        <h4 className="text-base leading-6 font-medium text-gray-900">
+                          Security
+                        </h4>
+                        <p className="mt-2 text-sm text-gray-500">
+                          Unfortunately, due to Cloudflare API limitations,
+                          workers.sh requires both an API Token and your email
+                          address {"&"} Global API Key. We hope to transition to
+                          API Token only soon.
+                        </p>
+                        <p className="mt-2 text-sm text-gray-500">
+                          Your API Token and Key are stored on your device, and
+                          sent as an HTTP headers only to communicate with the
+                          Cloudflare API.{" "}
+                          <span className="font-bold">
+                            Your authentication settings are not stored anywhere
+                            other than on your device
+                          </span>
+                          . This application is{" "}
+                          <a
+                            href="https://github.com/GregBrimble/cf-workers-dashboard"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-indigo-500 hover:underline"
+                          >
+                            open-source
+                          </a>
+                          .
+                        </p>
+                        {/* <div className="mt-4 relative flex items-start">
+                          <div className="absolute flex items-center h-5">
+                            <input
+                              id="candidates"
+                              type="checkbox"
+                              className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                              required={true}
+                            />
+                          </div>
+                          <div className="pl-7 text-sm leading-5">
+                            <label
+                              htmlFor="candidates"
+                              className="font-medium text-gray-700"
+                            >
+                              Email consent
+                            </label>
+                            <p className="text-gray-500">
+                              Do you give us permission to store your email
+                              address and email you with account information?
+                            </p>
+                          </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -196,7 +294,11 @@ export const Settings = forwardRef((props, ref) => {
               <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                 <button
                   onClick={() => {
-                    saveToken(token);
+                    saveAuthentication({
+                      token,
+                      emailAddress,
+                      key,
+                    });
                     setOpen(false);
                   }}
                   type="submit"
@@ -208,7 +310,7 @@ export const Settings = forwardRef((props, ref) => {
               <span className="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                 <button
                   onClick={() => {
-                    setToken(defaultTokenValue);
+                    setAuthentication(defaultAuthentication);
                     setOpen(false);
                   }}
                   type="button"

@@ -2,21 +2,34 @@ import React, { createContext, useState, FC, useContext } from "react";
 import { useLocalStorage, getValue } from "../hooks/useLocalStorage";
 import { client } from "../client";
 
-const TOKEN_KEY = "apiToken";
+const AUTHENTICATION_KEY = "CloudflareAuthentication";
+
+type Authentication = {
+  token: string;
+  emailAddress: string;
+  key: string;
+};
 
 const SettingsContext = createContext({
-  token: "",
-  setToken: (token: any) => {},
+  authentication: {
+    token: "",
+    emailAddress: "",
+    key: "",
+  },
+  setAuthentication: (authentication: Authentication) => {},
 });
 
 export const SettingsProvider = ({ children }: any) => {
-  const [token, setToken] = useLocalStorage(TOKEN_KEY, "");
+  const [authentication, setAuthentication] = useLocalStorage(
+    AUTHENTICATION_KEY,
+    {}
+  );
 
   return (
     <SettingsContext.Provider
       value={{
-        token,
-        setToken,
+        authentication,
+        setAuthentication,
       }}
     >
       {children}
@@ -25,18 +38,19 @@ export const SettingsProvider = ({ children }: any) => {
 };
 
 export const useSettings = () => {
-  const { token, setToken } = useContext(SettingsContext);
+  const { authentication, setAuthentication } = useContext(SettingsContext);
 
   return {
-    token,
-    setToken: (token: string) => {
-      setToken(token);
+    authentication,
+    setAuthentication: (authentication: Authentication) => {
+      setAuthentication(authentication);
       client.resetStore();
     },
+    hasToken: !!authentication.token,
+    hasKey: !!authentication.emailAddress && !!authentication.key,
   };
 };
 
-// TODO: This is gross.
-export const getSettings = () => {
-  return { token: getValue(TOKEN_KEY) };
+export const getSettings = (): Authentication => {
+  return JSON.parse(window.localStorage.getItem(AUTHENTICATION_KEY) || "{}");
 };
