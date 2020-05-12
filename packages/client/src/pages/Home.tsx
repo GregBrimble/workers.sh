@@ -14,7 +14,7 @@ export const Home = () => {
     <div className="max-w-none mx-auto">
       <div className="bg-white overflow-hidden rounded-lg shadow">
         <div className="bg-white px-4 py-5 sm:px-6">
-          <div className="py-16 bg-gray-50 overflow-hidden">
+          <div className="py-16 overflow-hidden">
             <div className="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-screen-xl">
               <div className="relative">
                 <h3 className="text-center text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
@@ -344,12 +344,6 @@ export const Home = () => {
                     <span className="text-2xl font-extrabold">
                       Coming soon!
                     </span>
-                    <img
-                      className="relative mx-auto"
-                      width="490"
-                      src="/img/features/feature-example-2.png"
-                      alt=""
-                    />
                   </div>
                 </div>
               </div>
@@ -362,12 +356,12 @@ export const Home = () => {
             </h2>
             <div className="mt-8 flex lg:flex-shrink-0 lg:mt-0">
               <div className="ml-3 inline-flex rounded-md shadow">
-                <Link
-                  to="/accounts"
+                <a
+                  href="/accounts"
                   className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
                 >
                   Get started
-                </Link>
+                </a>
               </div>
             </div>
           </div>

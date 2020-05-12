@@ -154,7 +154,7 @@ export const Settings = forwardRef((props, ref) => {
                                 </dt>
                                 <dd>Required to deploy Workers scripts</dd>
                                 <dt className="font-medium mt-2 first:mt-0">
-                                  Account → Workers Routes → Edit
+                                  Zone → Workers Routes → Edit
                                 </dt>
                                 <dd>
                                   Required to deploy Workers scripts to a given
@@ -165,7 +165,7 @@ export const Settings = forwardRef((props, ref) => {
                                 </dt>
                                 <dd>Required to read workers.dev subdomain</dd>
                                 <dt className="font-medium mt-2 first:mt-0">
-                                  Account → User Details → Read
+                                  User → User Details → Read
                                 </dt>
                                 <dd>
                                   Required to fetch basic user information
