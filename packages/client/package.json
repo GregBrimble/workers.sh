@@ -17,7 +17,8 @@
     "react-scripts": "3.4.1",
     "react-table": "7.0.4",
     "react-transition-group": "4.3.0",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "snyk": "^1.320.2"
   },
   "scripts": {
     "build:style": "postcss src/index.css -o src/index.generated.css",
@@ -30,7 +31,9 @@
     "test:ci": "npm run test -- --coverage",
     "eject": "react-scripts eject",
     "lint": "prettier -c .",
-    "lint:fix": "npm run lint -- --write"
+    "lint:fix": "npm run lint -- --write",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -69,5 +72,6 @@
     "react-scripts": "3.4.1",
     "tailwindcss": "1.4.4",
     "typescript": "3.8.3"
-  }
+  },
+  "snyk": true
 }
