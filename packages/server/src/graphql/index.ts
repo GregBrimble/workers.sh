@@ -47,7 +47,7 @@ const makeResponse = (data: any) => {
   });
 };
 
-export const api = async (request: Request): Promise<Response> => {
+export const handleRequest = async (request: Request): Promise<Response> => {
   let graphQLRequest: GraphQLRequest;
 
   try {

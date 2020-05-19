@@ -10,6 +10,7 @@
     "md5": "2.2.1",
     "moment": "2.24.0",
     "plotly.js": "1.54.1",
+    "pusher-js": "6.0.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-plotly.js": "2.4.0",

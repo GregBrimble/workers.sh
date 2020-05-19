@@ -260,7 +260,7 @@ const INITIAL_STATE = [
 
 export const ExamplePeek = () => {
   const newSize = (state: Location[]): Location[] => {
-    state[Math.round(state.length * Math.random()) - 1].size += 5;
+    state[Math.floor(state.length * Math.random())].size += 5;
     return [...state];
   };
 

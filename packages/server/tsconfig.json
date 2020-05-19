@@ -3,7 +3,8 @@
     "target": "esnext",
     "module": "commonjs",
     "experimentalDecorators": true,
-    "lib": ["esnext", "webworker"]
+    "lib": ["esnext", "webworker"],
+    "resolveJsonModule": true
   },
   "include": [
     "./src/**/*.ts",

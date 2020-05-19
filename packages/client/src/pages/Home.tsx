@@ -94,8 +94,9 @@ export const Home = () => {
                             Detailed reports
                           </h5>
                           <p className="mt-2 text-base leading-6 text-gray-500">
-                            Get data you can't see anywhere else. View the CPU
-                            time, errors and subrequests for your Workers.
+                            Get data you can't see anywhere else. View the
+                            complete breakdown of CPU time, errors and
+                            subrequests for your Workers.
                           </p>
                         </div>
                       </div>
@@ -109,13 +110,11 @@ export const Home = () => {
                               stroke="currentColor"
                               fill="none"
                               viewBox="0 0 24 24"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z"
-                              />
+                              <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                           </div>
                         </div>
@@ -124,10 +123,10 @@ export const Home = () => {
                             Ready to use, right now
                           </h5>
                           <p className="mt-2 text-base leading-6 text-gray-500">
-                            Cloudflare keeps logs for all Workers requests, so
-                            unlike if you were to setup a traditional logging
-                            service, weeks of historic data is available for you
-                            to peruse, right now.
+                            Cloudflare keeps three months of logs for all
+                            Workers requests, so unlike if you were to setup a
+                            traditional logging service, historic data is
+                            available for you to peruse, right now.
                           </p>
                         </div>
                       </div>
@@ -176,6 +175,35 @@ export const Home = () => {
                               Use Monaco (Visual Studio Code's editor) in the
                               browser for a fully-fledged development
                               experience.
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li className="mt-10">
+                        <div className="flex">
+                          <div className="flex-shrink-0">
+                            <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                              <svg
+                                className="h-6 w-6"
+                                stroke="currentColor"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                              >
+                                <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                              </svg>
+                            </div>
+                          </div>
+                          <div className="ml-4">
+                            <h5 className="text-lg leading-6 font-medium text-gray-900">
+                              High-quality templates
+                            </h5>
+                            <p className="mt-2 text-base leading-6 text-gray-500">
+                              Use Cloudflare Workers immediately, by deploying
+                              one of our templates.
                             </p>
                           </div>
                         </div>
@@ -331,8 +359,38 @@ export const Home = () => {
                             </h5>
                             <p className="mt-2 text-base leading-6 text-gray-500">
                               No more polling and putting unnecessary load on
-                              your Worker. Open a WebSocket and listen for
-                              pushes direct from your API.
+                              your Worker. Experience ~3x less latency by
+                              opening a WebSocket and listening for pushes
+                              direct from your API.
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="mt-10">
+                        <div className="flex">
+                          <div className="flex-shrink-0">
+                            <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                              <svg
+                                className="h-6 w-6"
+                                stroke="currentColor"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                              >
+                                <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                              </svg>
+                            </div>
+                          </div>
+                          <div className="ml-4">
+                            <h5 className="text-lg leading-6 font-medium text-gray-900">
+                              End-to-end encryption
+                            </h5>
+                            <p className="mt-2 text-base leading-6 text-gray-500">
+                              Rest easy knowing workers.sh can't see the content
+                              of your WebSocket messages. Securely send client
+                              information, in full compliance with GDPR.
                             </p>
                           </div>
                         </div>
@@ -340,10 +398,10 @@ export const Home = () => {
                     </ul>
                   </div>
 
-                  <div className="mt-10 -mx-4 relative lg:mt-0 lg:col-start-1 text-center">
-                    <span className="text-2xl font-extrabold">
+                  <div className="mt-10 -mx-4 relative lg:mt-0 lg:col-start-1">
+                    <div className="text-center text-2xl font-extrabold">
                       Coming soon!
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -123,14 +123,14 @@ const analyticsToSeries = (analytics: any, interval: string) => {
       new Date(a.dimensions[interval]).getTime() -
       new Date(b.dimensions[interval]).getTime()
   )) {
-    min.y.push(analytic.min.cpuTime);
-    p25.y.push(analytic.quantiles.cpuTimeP25);
-    p50.y.push(analytic.quantiles.cpuTimeP50);
-    p75.y.push(analytic.quantiles.cpuTimeP75);
-    p90.y.push(analytic.quantiles.cpuTimeP90);
-    p99.y.push(analytic.quantiles.cpuTimeP99);
-    p999.y.push(analytic.quantiles.cpuTimeP999);
-    max.y.push(analytic.max.cpuTime);
+    min.y.push(analytic.min.cpuTime / 1000);
+    p25.y.push(analytic.quantiles.cpuTimeP25 / 1000);
+    p50.y.push(analytic.quantiles.cpuTimeP50 / 1000);
+    p75.y.push(analytic.quantiles.cpuTimeP75 / 1000);
+    p90.y.push(analytic.quantiles.cpuTimeP90 / 1000);
+    p99.y.push(analytic.quantiles.cpuTimeP99 / 1000);
+    p999.y.push(analytic.quantiles.cpuTimeP999 / 1000);
+    max.y.push(analytic.max.cpuTime / 1000);
     errors.y.push(analytic.sum.errors);
     requests.y.push(analytic.sum.requests);
     subrequests.y.push(analytic.sum.subrequests);
@@ -149,9 +149,11 @@ const analyticsToSeries = (analytics: any, interval: string) => {
 
 const maxTime = (analytics: any[]) =>
   Math.ceil(
-    Math.max(...analytics.map((analytic: any) => analytic.max.cpuTime), 5000) /
-      1000.0
-  ) * 1000;
+    Math.max(
+      ...analytics.map((analytic: any) => analytic.max.cpuTime / 1000),
+      5
+    )
+  );
 
 export const Analytics = () => {
   const { workerID: scriptID, accountID } = useParams();
@@ -409,14 +411,14 @@ export const Analytics = () => {
           const series = analytics.map((analytic: any) => ({
             x: [0, 0.25, 0.5, 0.75, 0.9, 0.99, 0.999, 1],
             y: [
-              analytic.min.cpuTime,
-              analytic.quantiles.cpuTimeP25,
-              analytic.quantiles.cpuTimeP50,
-              analytic.quantiles.cpuTimeP75,
-              analytic.quantiles.cpuTimeP90,
-              analytic.quantiles.cpuTimeP99,
-              analytic.quantiles.cpuTimeP999,
-              analytic.max.cpuTime,
+              analytic.min.cpuTime / 1000,
+              analytic.quantiles.cpuTimeP25 / 1000,
+              analytic.quantiles.cpuTimeP50 / 1000,
+              analytic.quantiles.cpuTimeP75 / 1000,
+              analytic.quantiles.cpuTimeP90 / 1000,
+              analytic.quantiles.cpuTimeP99 / 1000,
+              analytic.quantiles.cpuTimeP999 / 1000,
+              analytic.max.cpuTime / 1000,
             ],
             type: "scatter",
             name: analytic.dimensions.status,

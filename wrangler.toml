@@ -16,7 +16,7 @@ entry-point = "./packages/worker"
 [env.production]
 name = "workers-sh"
 zone_id = "87d33ac29978760c33716c525858644f"
-route = "*workers.sh/*"
+routes = [ "workers.sh/*", "www.workers.sh/*" ]
 
 kv-namespaces = [
 	{ binding = "CLOUDFLARE", id = "ff9370e10a69405ea56f1bceba2e7088" },
