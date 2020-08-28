@@ -6,7 +6,7 @@
     "@apollo/client": "3.0.0-beta.44",
     "@monaco-editor/react": "3.3.0",
     "graphql": "15.0.0",
-    "lodash": "4.17.15",
+    "lodash": "4.17.17",
     "md5": "2.2.1",
     "moment": "2.24.0",
     "plotly.js": "1.54.1",
