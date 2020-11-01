@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "3.0.0-beta.44",
+    "@apollo/client": "3.2.3",
     "@monaco-editor/react": "3.3.0",
     "graphql": "15.0.0",
     "lodash": "4.17.15",
