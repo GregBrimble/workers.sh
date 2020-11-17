@@ -16,7 +16,7 @@
     "react-plotly.js": "2.4.0",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.1",
-    "react-table": "7.0.4",
+    "react-table": "7.6.1",
     "react-transition-group": "4.3.0",
     "typescript": "3.8.3"
   },
