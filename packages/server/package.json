@@ -18,7 +18,7 @@
   "dependencies": {
     "@kv-orm/cf-workers": "2.0.1",
     "@kv-orm/core": "0.1.1",
-    "graphql": "15.0.0",
+    "graphql": "16.2.0",
     "graphql-iso-date": "3.6.1",
     "graphql-scalars": "1.1.2",
     "graphql-tag": "2.10.3",
