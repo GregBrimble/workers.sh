@@ -36,7 +36,7 @@
   "homepage": "https://cf-workers-dashboard.gregbrimble.workers.dev/",
   "devDependencies": {
     "@cloudflare/wrangler": "1.9.0",
-    "cross-fetch": "3.0.4",
+    "cross-fetch": "3.1.5",
     "husky": "4.2.5",
     "lerna": "3.20.2",
     "npm-check-updates": "4.1.2",
