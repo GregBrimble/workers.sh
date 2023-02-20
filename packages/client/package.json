@@ -18,7 +18,7 @@
     "react-scripts": "3.4.1",
     "react-table": "7.0.4",
     "react-transition-group": "4.3.0",
-    "typescript": "3.8.3"
+    "typescript": "4.9.5"
   },
   "scripts": {
     "build:style": "postcss src/index.css -o src/index.generated.css",
@@ -69,6 +69,6 @@
     "prettier": "2.0.5",
     "react-scripts": "3.4.1",
     "tailwindcss": "1.4.4",
-    "typescript": "3.8.3"
+    "typescript": "4.9.5"
   }
 }
