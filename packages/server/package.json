@@ -22,7 +22,7 @@
     "graphql-iso-date": "3.6.1",
     "graphql-scalars": "1.1.2",
     "graphql-tag": "2.10.3",
-    "graphql-tools": "5.0.0",
+    "graphql-tools": "9.0.1",
     "wait-until-all": "1.0.1"
   }
 }
