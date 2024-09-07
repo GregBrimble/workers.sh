@@ -18,11 +18,11 @@
   "dependencies": {
     "@kv-orm/cf-workers": "2.0.1",
     "@kv-orm/core": "0.1.1",
-    "graphql": "15.0.0",
+    "graphql": "16.9.0",
     "graphql-iso-date": "3.6.1",
-    "graphql-scalars": "1.1.2",
-    "graphql-tag": "2.10.3",
-    "graphql-tools": "5.0.0",
+    "graphql-scalars": "1.23.0",
+    "graphql-tag": "2.12.6",
+    "graphql-tools": "9.0.1",
     "wait-until-all": "1.0.1"
   }
 }
